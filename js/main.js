@@ -1,53 +1,23 @@
-import TutorialPopup from './TutorialPopup.js'
-import vector2 from './Vector2.js'
-import  fillCircle  from './FillCircle.js'
-import { directionMap,popup,pressedKeys,speed,radius } from './global.js'
-(()=>{
-    var canvas=document.getElementById("game")
-    var context=canvas.getContext("2d")
-    let start;
-    let pos=new vector2(radius+10,radius+75)
-    function step(timestamp){
+import Game from './Game.js';
+import { popup } from './global.js';
+import { context } from './setup.js';
 
-        if(start===undefined){
-            start=timestamp
-        }
-        let dt=(timestamp-start)*0.001
-        start=timestamp
-        popup.update(dt)
+let start;
+const game = new Game();
 
-        var width=window.innerWidth
-        var height=window.innerHeight
-        canvas.width = width
-        canvas.height = height
-        let vel=new vector2(0,0)
-        for (let key of pressedKeys){
-        if(key in directionMap){
-            vel=vel.add(directionMap[key])
-        }
-        }
-        pos=pos.add(vel.scale(dt))
-        context.clearRect(0,0,width,height)
-        fillCircle(context,pos.x,pos.y,radius,"indigo")
+function step(timestamp) {
+    if (start === undefined) start = timestamp;
 
-        popup.render(context)
+    let dt = (timestamp - start) * 0.001;
+    start = timestamp;
 
-        context.font = "50px Bitcount Prop Single";
-        context.fillStyle = "indigo";
-        context.fillText("Movement List - ⬆️⬇️⬅️➡️",10,55);
+    game.update(dt);
+    game.render(context);
 
-        requestAnimationFrame(step)
+    requestAnimationFrame(step);
+}
 
-    }
-    requestAnimationFrame(step)
-    document.addEventListener('keydown',event =>{
-        pressedKeys.add(event.code)
-        
-    })
-    document.addEventListener('keyup',event =>{
-        pressedKeys.delete(event.code)
-    })
+requestAnimationFrame(step);
 
-    context.stroke()
-
-})()
+document.addEventListener("keydown", e => game.keydown(e));
+document.addEventListener("keyup", e => game.keyup(e));
