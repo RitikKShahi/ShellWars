@@ -20,10 +20,12 @@ class TutorialPopup {
     }
 
     render(context) {
+        const width = context.canvas.width;
+        const height = context.canvas.height;
         context.font = "40px Bitcount Prop Single";
         context.fillStyle = `rgba(255,255,255,${this.alpha})`;
         context.textAlign="center"
-        context.fillText(this.text,innerWidth/2,innerHeight/2);
+        context.fillText(this.text,width/2,height/2);
     }
     fadeIn(){
         this.dalpha=  1.0

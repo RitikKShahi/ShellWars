@@ -21,3 +21,11 @@ requestAnimationFrame(step);
 
 document.addEventListener("keydown", e => game.keydown(e));
 document.addEventListener("keyup", e => game.keyup(e));
+document.addEventListener("mousemove",e=>{
+    // console.log(e);
+    // game.mouseMove(e)
+})
+document.addEventListener("mousedown",e=>{
+    // console.log(e);
+    game.mouseDown(e)
+})
